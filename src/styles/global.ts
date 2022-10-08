@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -12,4 +12,11 @@ export const GlobalStyle = createGlobalStyle`
   body, input {
         font-family: 'Nunito', sans-serif;
     }
+`
+
+export const Container = styled.div`
+  width: 100%;
+  max-width: 900px;
+  padding: 0 18px;
+  margin: 0 auto;
 `
