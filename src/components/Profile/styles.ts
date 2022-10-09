@@ -34,13 +34,14 @@ export const ProfileContentHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+    
   h2 {
     font-size: 1.25rem;
     color: ${({ theme }) => theme.title};
   }
-
+  
   a {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -48,6 +49,22 @@ export const ProfileContentHeader = styled.div`
     color: ${({ theme }) => theme.blue};
     text-transform: uppercase;
     text-decoration: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background: ${({ theme }) => theme.blue};
+
+      transition: width 0.2s ease-in-out;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
   }
 `
 
