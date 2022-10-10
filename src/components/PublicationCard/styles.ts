@@ -22,9 +22,15 @@ export const PublicationHeader = styled.div`
   justify-content: space-between;
 
   h3 {
+    display: -webkit-box;
     max-width: 283px;
+    height: 54px;
     font-size: 1.25rem;
     color: ${({ theme }) => theme.title};
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;	
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   span {

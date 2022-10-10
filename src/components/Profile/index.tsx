@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { GithubDataContext } from '../../contexts/GithubDataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBuilding,
@@ -14,33 +16,35 @@ import {
 } from "./styles";
 
 export function Profile() {
+  const { user } = useContext(GithubDataContext)
+
   return (
     <ProfileContainer>
-      <img src="https://www.github.com/bzenky.png" alt="Github Profile Photo" />
+      <img src={user.avatar_url} alt="Github Profile Photo" />
 
       <ProfileContentWrapper>
         <ProfileContentHeader>
-          <h2>Bruno Zenky</h2>
-          <a href="https://www.github.com/bzenky" target="_blank" rel="noopener">
+          <h2>{user.name}</h2>
+          <a href={user.html_url} target="_blank" rel="noopener">
             Github
             <FontAwesomeIcon icon={faArrowUpRightFromSquare} color='#3294F8' />
           </a>
         </ProfileContentHeader>
 
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus similique nisi facere aspernatur recusandae tenetur autem illo quod explicabo, nam iusto asperiores cupiditate. Dolor, quam vero commodi ex quos eaque?</p>
+        <p>{user.bio}</p>
 
         <ProfileSocials>
           <SocialBadge
             icon={<FontAwesomeIcon icon={faGithub} color='#3A536B' size="lg" />}
-            description="bzenky"
+            description={user.login}
           />
           <SocialBadge
             icon={<FontAwesomeIcon icon={faBuilding} color='#3A536B' />}
-            description="Magazord"
+            description={user.company}
           />
           <SocialBadge
             icon={<FontAwesomeIcon icon={faUserGroup} color='#3A536B' />}
-            description="32 seguidores"
+            description={`${user.followers} seguidores`}
           />
         </ProfileSocials>
       </ProfileContentWrapper>
