@@ -9,19 +9,26 @@ import {
 } from "./styles";
 
 export function Publications() {
-  const { issues } = useContext(GithubDataContext)
+  const { filteredIssues } = useContext(GithubDataContext)
 
   return (
     <PublicationsContainer>
       <TitleContainer>
         <h2>Publicações</h2>
-        <span>{`${issues.length} publicações`}</span>
+        <span>
+          {filteredIssues.length < 1 && 'nenhuma publicação'}
+          {filteredIssues.length === 1 
+            ? `${filteredIssues.length} publicação`
+            : filteredIssues.length > 1
+              && `${filteredIssues.length} publicações`
+          }
+        </span>
       </TitleContainer>
 
       <SearchInput />
 
       <PublicationsCardsContainer>
-        {issues.map((issue) =>
+        {filteredIssues.map((issue) =>
           <PublicationCard
             key={issue.id}
             title={issue.title}
