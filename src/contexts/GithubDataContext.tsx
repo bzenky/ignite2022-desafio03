@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react"
-import { ghRepoAPI, ghUserAPI } from "../lib/api"
+import { api } from "../lib/api"
 
 interface GithubDataContextProviderProps {
   children: React.ReactNode
@@ -10,6 +10,7 @@ interface GithubDataContextProps {
   issues: IssuesProps[]
   SearchInputFilter: (input: string) => void
   filteredIssues: IssuesProps[]
+  isLoading: boolean
 }
 
 interface UserProps {
@@ -27,6 +28,7 @@ interface IssuesProps {
   created_at: Date
   id: number
   title: string
+  number: number
 }
 
 export const GithubDataContext = createContext({} as GithubDataContextProps)
@@ -35,16 +37,27 @@ export function GithubDataContextProvider({ children }: GithubDataContextProvide
   const [user, setUser] = useState({} as UserProps)
   const [issues, setIssues] = useState([] as IssuesProps[])
   const [filteredIssues, setFilteredIssues] = useState([] as IssuesProps[])
-  
+  const [isLoading, setIsLoading] = useState(false as boolean)
+
   async function getUserData() {
-    const response = await ghUserAPI.get('bzenky')
-    setUser(response.data)
+    try {
+      setIsLoading(true)
+      const response = await api.get('users/bzenky')
+      setUser(response.data)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   async function getRepoIssueList() {
-    const response = await ghRepoAPI.get('bzenky/ignite2022-desafio03/issues')
-    setIssues(response.data)
-    setFilteredIssues(response.data)
+    try {
+      setIsLoading(true)
+      const response = await api.get('repos/bzenky/ignite2022-desafio03/issues')
+      setIssues(response.data)
+      setFilteredIssues(response.data)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   async function SearchInputFilter(input: string) {
@@ -59,7 +72,7 @@ export function GithubDataContextProvider({ children }: GithubDataContextProvide
   }, [])
 
   return (
-    <GithubDataContext.Provider value={{ user, issues, SearchInputFilter, filteredIssues }}>
+    <GithubDataContext.Provider value={{ user, issues, SearchInputFilter, filteredIssues, isLoading }}>
       {children}
     </GithubDataContext.Provider>
   )

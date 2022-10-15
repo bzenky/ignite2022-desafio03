@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const PublicationCardContainer = styled.a`
+export const PublicationCardContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   width: 416px;

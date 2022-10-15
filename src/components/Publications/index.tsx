@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { GithubDataContext } from "../../contexts/GithubDataContext";
-import { PublicationCard } from "../PublicationCard";
-import { SearchInput } from "../SearchInput";
+import { useContext } from "react"
+import { GithubDataContext } from "../../contexts/GithubDataContext"
+import { PublicationCard } from "../PublicationCard"
+import { SearchInput } from "../SearchInput"
 import {
   PublicationsCardsContainer,
   PublicationsContainer,
@@ -17,10 +17,10 @@ export function Publications() {
         <h2>Publicações</h2>
         <span>
           {filteredIssues.length < 1 && 'nenhuma publicação'}
-          {filteredIssues.length === 1 
+          {filteredIssues.length === 1
             ? `${filteredIssues.length} publicação`
             : filteredIssues.length > 1
-              && `${filteredIssues.length} publicações`
+            && `${filteredIssues.length} publicações`
           }
         </span>
       </TitleContainer>
@@ -34,6 +34,7 @@ export function Publications() {
             title={issue.title}
             content={issue.body}
             created_at={issue.created_at}
+            postId={issue.number}
           />
         )}
       </PublicationsCardsContainer>

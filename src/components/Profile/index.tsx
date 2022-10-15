@@ -14,40 +14,52 @@ import {
   ProfileContentWrapper,
   ProfileSocials
 } from "./styles";
+import { Spinner } from '../Spinner';
 
 export function Profile() {
-  const { user } = useContext(GithubDataContext)
+  const { isLoading, user } = useContext(GithubDataContext)
 
   return (
     <ProfileContainer>
-      <img src={user.avatar_url} alt="Github Profile Photo" />
+      {isLoading
+        ? <Spinner />
+        : (
+          <>
+            <img src={user.avatar_url} alt="Github Profile Photo" />
 
-      <ProfileContentWrapper>
-        <ProfileContentHeader>
-          <h2>{user.name}</h2>
-          <a href={user.html_url} target="_blank" rel="noopener">
-            Github
-            <FontAwesomeIcon icon={faArrowUpRightFromSquare} color='#3294F8' />
-          </a>
-        </ProfileContentHeader>
+            <ProfileContentWrapper>
+              <ProfileContentHeader>
+                <h2>{user.name}</h2>
+                <a href={user.html_url} target="_blank" rel="noopener">
+                  Github
+                  <FontAwesomeIcon icon={faArrowUpRightFromSquare} color='#3294F8' />
+                </a>
+              </ProfileContentHeader>
 
-        <p>{user.bio}</p>
+              <p>{user.bio}</p>
 
-        <ProfileSocials>
-          <SocialBadge
-            icon={<FontAwesomeIcon icon={faGithub} color='#3A536B' size="lg" />}
-            description={user.login}
-          />
-          <SocialBadge
-            icon={<FontAwesomeIcon icon={faBuilding} color='#3A536B' />}
-            description={user.company}
-          />
-          <SocialBadge
-            icon={<FontAwesomeIcon icon={faUserGroup} color='#3A536B' />}
-            description={`${user.followers} seguidores`}
-          />
-        </ProfileSocials>
-      </ProfileContentWrapper>
+              <ProfileSocials>
+                <SocialBadge
+                  icon={<FontAwesomeIcon icon={faGithub} color='#3A536B' size="lg" />}
+                  description={user.login}
+                />
+
+                {user?.company &&
+                  <SocialBadge
+                    icon={<FontAwesomeIcon icon={faBuilding} color='#3A536B' />}
+                    description={user.company}
+                  />
+                }
+
+                <SocialBadge
+                  icon={<FontAwesomeIcon icon={faUserGroup} color='#3A536B' />}
+                  description={`${user.followers} seguidores`}
+                />
+              </ProfileSocials>
+            </ProfileContentWrapper>
+          </>
+        )
+      }
     </ProfileContainer>
   )
 }

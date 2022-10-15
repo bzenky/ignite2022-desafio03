@@ -1,5 +1,4 @@
-import { formatDistanceToNow } from 'date-fns'
-import ptBR from 'date-fns/locale/pt-BR'
+import { distanceToNow } from '../../utils/distanceToNow';
 import {
   PublicationCardContainer,
   PublicationHeader,
@@ -10,19 +9,15 @@ interface PublicationCardProps {
   title: string
   content: string
   created_at: Date
+  postId: number
 }
 
-export function PublicationCard({ title, content, created_at }: PublicationCardProps) {
-  const formattedDate = formatDistanceToNow(new Date(created_at), {
-    addSuffix: true,
-    locale: ptBR
-  })
-
+export function PublicationCard({ title, content, created_at, postId }: PublicationCardProps) {
   return (
-    <PublicationCardContainer href="#">
+    <PublicationCardContainer to={`/post/${postId}`}>
       <PublicationHeader>
         <h3>{title}</h3>
-        <span>{formattedDate}</span>
+        <span>{distanceToNow(created_at)}</span>
       </PublicationHeader>
 
       <PublicationPreview>
